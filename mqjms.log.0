@@ -1,0 +1,18 @@
+16 марта 2024 г., 16:31:21 EET[org.springframework.jms.JmsListenerEndpointContainer#0-1] com.ibm.msg.client.commonservices.util.SerializationValidator
+Поддержка списка разрешений не включена - не заданы свойства или недостаточные права доступа для их чтения
+
+Объяснение:
+null
+
+Действие:
+null
+--------------------------------------------------------------------
+16 марта 2024 г., 16:34:49 EET[org.springframework.jms.JmsListenerEndpointContainer#0-1] com.ibm.msg.client.commonservices.util.SerializationValidator
+Поддержка списка разрешений не включена - не заданы свойства или недостаточные права доступа для их чтения
+
+Объяснение:
+null
+
+Действие:
+null
+--------------------------------------------------------------------

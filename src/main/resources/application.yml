@@ -1,0 +1,24 @@
+spring:
+  application:
+    name: ibm_mq_listener
+server:
+  port: 9090
+  datasource:
+    url: jdbc:postgresql://localhost:5432/<YOUR_DATABASE_NAME>
+    username: <YOUR_USERNAME>
+    password: <YOUR_PASSWORD>
+  jpa:
+    hibernate:
+#      ddl-auto: <create | create-drop | update | validate | none>
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+
+ibm:
+  mq:
+    user: admin
+    password: passw0rd
+    queue-manager: QM1
+    channel: DEV.ADMIN.SVRCONN
+    conn-name: localhost(1414)
+    use-authentication-m-q-c-s-p: false

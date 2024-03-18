@@ -1,19 +1,31 @@
 package com.example.ibmmqlistener.domain;
 
 
-import lombok.Getter;
-import lombok.Setter;
+
+import jakarta.persistence.*;
+import lombok.*;
 
 import java.io.Serializable;
 
 
 @Getter
 @Setter
-//@XmlRootElement(name = "OrderMessage")
-//@XmlAccessorType(XmlAccessType.FIELD)
+@Entity
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
+@Table(name = "order_message")
 public class OrderMessage implements Serializable {
-    private String message;
-    private String identifier;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id")
+    private Long messageId;
+    private String orderId;
+    private String status;
+    private String customerNumber;
+    private String date;
+
+
 
 
 }

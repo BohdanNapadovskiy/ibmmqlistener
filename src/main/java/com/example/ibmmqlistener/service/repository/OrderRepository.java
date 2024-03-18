@@ -1,11 +1,11 @@
 package com.example.ibmmqlistener.service.repository;
 
 
-import com.example.ibmmqlistener.domain.Order;
+import com.example.ibmmqlistener.domain.OrderMessage;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface OrderRepository extends CrudRepository<Order,String > {
+public interface OrderRepository extends CrudRepository<OrderMessage, Long> {
 }

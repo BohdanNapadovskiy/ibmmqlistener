@@ -1,18 +1,15 @@
 spring:
   application:
     name: ibm_mq_listener
+  datasource:
+    url: jdbc:postgresql://localhost:5432/habrdb
+    driver-class-name: org.postgresql.Driver
+    username: habrpguser
+    password: pgpwd4habr
+  jpa:
+    database-platform: org.hibernate.dialect.PostgreSQLDialect
 server:
   port: 9090
-  datasource:
-    url: jdbc:postgresql://localhost:5432/<YOUR_DATABASE_NAME>
-    username: <YOUR_USERNAME>
-    password: <YOUR_PASSWORD>
-  jpa:
-    hibernate:
-#      ddl-auto: <create | create-drop | update | validate | none>
-    properties:
-      hibernate:
-        dialect: org.hibernate.dialect.PostgreSQLDialect
 
 ibm:
   mq:

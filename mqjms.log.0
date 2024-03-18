@@ -16,3 +16,12 @@ null
 Действие:
 null
 --------------------------------------------------------------------
+March 18, 2024, 6:59:22 PM EET[org.springframework.jms.JmsListenerEndpointContainer#0-1] com.ibm.msg.client.commonservices.util.SerializationValidator
+No Allow list functionality enabled - either the properties were not set, or the security permissions prevent them being read
+
+EXPLANATION:
+null
+
+ACTION:
+null
+--------------------------------------------------------------------

@@ -1,6 +1,60 @@
 spring:
   application:
     name: ibm_mq_listener
+  datasource:
+    url: jdbc:postgresql://localhost:5432/habrdb
+    driver-class-name: org.postgresql.Driver
+    username: habrpguser
+    password: pgpwd4habr
+  jpa:
+    database-platform: org.hibernate.dialect.PostgreSQLDialect
+
+#  datasource:
+#    url: jdbc:postgresql://localhost:5432/habrdb
+#    xa:
+#      data-source-class-name: org.postgresql.xa.PGXADataSource
+#      properties:
+#        userName: habrpguser
+#        password: pgpwd4habr
+#        initialization-mode: always
+#
+##  datasource:
+##    xa:
+##      data-source-class-name: org.postgresql.xa.PGXADataSource
+##      properties:
+##        user: habrpguser
+##        password: pgpwd4habr
+##        portNumber: 5432
+##        serverName: localhost
+##        databaseName: habrdb
+#
+##  jpa:
+##    properties:
+##      hibernate:
+##        dialect: org.hibernate.dialect.PostgreSQLDialect
+#  jta:
+#    atomikos:
+#      connectionfactory:
+#        ignore-session-transacted-flag: false
+#        unique-resource-name: xa.amq
+#        min-pool-size: 10
+#        max-pool-size: 20
+#      datasource:
+#        unique-resource-name: xa.db
+#        min-pool-size: 10
+#        max-pool-size: 20
+#        test-query: "select 1"
+#
+
+
+#        primary:
+#          unique-resource-name: primaryDataSource
+#          xa-data-source-classname: org.postgresql.xa.PGXADataSource
+#          xa-properties:
+#            user: habrpguser
+#            password: pgpwd4habr
+#            url: jdbc:postgresql://localhost:5432/habrdb
+
 server:
   port: 9090
 

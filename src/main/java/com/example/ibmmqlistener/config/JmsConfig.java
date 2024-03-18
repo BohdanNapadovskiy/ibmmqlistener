@@ -9,14 +9,14 @@ import org.springframework.jms.support.converter.MessageConverter;
 import org.springframework.jms.support.converter.SimpleMessageConverter;
 
 
-
 @Configuration
 public class JmsConfig {
     @Bean
-    public JmsListenerContainerFactory<?> myJmsFactory(ConnectionFactory connectionFactory, MessageConverter messageConverter) {
+    public JmsListenerContainerFactory<?> JmsFactory(ConnectionFactory connectionFactory, MessageConverter messageConverter) {
         DefaultJmsListenerContainerFactory factory = new DefaultJmsListenerContainerFactory();
         factory.setConnectionFactory(connectionFactory);
         factory.setMessageConverter(messageConverter);
+        factory.setSessionTransacted(true);
         return factory;
     }
 
@@ -24,4 +24,5 @@ public class JmsConfig {
     public MessageConverter jmsMessageConverter() {
         return new SimpleMessageConverter();
     }
+
 }

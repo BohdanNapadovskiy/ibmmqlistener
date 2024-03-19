@@ -9,12 +9,15 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.jms.JMSException;
 import jakarta.jms.Message;
 import jakarta.jms.TextMessage;
-import jakarta.transaction.Transactional;
+
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.jms.annotation.JmsListener;
 import org.springframework.jms.core.JmsTemplate;
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Transactional;
+
+import java.time.Instant;
 
 
 @Slf4j
@@ -24,28 +27,45 @@ public class JMSListener {
     private final MessageValidator validator;
     private final OrderRepository repository;
     private final JmsTemplate jmsTemplate;
+    private final ObjectMapper mapper;
 
 
     @JmsListener(destination = "ORDER.REQUEST", containerFactory = "JmsFactory")
     @Transactional
     public void process(Message message) {
-        log.info("Processing message from queue {}", message);
+        log.info("Processing message from queue: {}", message);
+        long startTime = System.nanoTime();
         try {
-            validator.validateMessage(message);
+            validator.validateMessage(message); // Assuming validator is available in the class context.
             processMessage(message);
+            logExecutionTime(startTime);
         } catch (JMSException | JsonProcessingException | NotValidMessageException e) {
-            throw new RuntimeException();
+            logErrorAndRethrow(e, startTime);
         }
     }
 
 
     private void processMessage(Message message) throws JMSException, JsonProcessingException {
-        ObjectMapper mapper = new ObjectMapper();
-        TextMessage textMessage = (TextMessage) message;
-        OrderMessage order = mapper.readValue(textMessage.getText(), OrderMessage.class);
-        repository.save(order);
-        jmsTemplate.convertAndSend("ORDER.RESPONSE", order);
+        if (message instanceof TextMessage textMessage) {
+            OrderMessage order = mapper.readValue(textMessage.getText(), OrderMessage.class);
+            repository.save(order);
+            jmsTemplate.convertAndSend("ORDER.RESPONSE", order);
+        } else {
+            throw new IllegalArgumentException("Message must be of type TextMessage");
+        }
+    }
 
+    private void logExecutionTime(long startTime) {
+        long endTime = System.nanoTime();
+        long executionTimeInMs = (endTime - startTime) / 1_000_000;
+        log.info("Total execution time: {} ms", executionTimeInMs);
+    }
+
+    private void logErrorAndRethrow(Exception e,long startTime) {
+        logExecutionTime(startTime);
+        log.info("Sending message  to the backout queue time {}", Instant.now());
+        log.error("Error processing message: ", e);
+        throw new RuntimeException("Failed to process the JMS message", e);
     }
 
 

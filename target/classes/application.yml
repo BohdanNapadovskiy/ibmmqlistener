@@ -1,0 +1,36 @@
+server:
+  port: 9090
+
+spring:
+  application:
+    name: ibm_mq_listener
+  datasource:
+    url: jdbc:postgresql://localhost:5432/habrdb
+    driver-class-name: org.postgresql.Driver
+    username: habrpguser
+    password: pgpwd4habr
+  jta:
+    enabled: true
+    atomikos:
+      datasource:
+        orderDataSource:
+          unique-resource-name: xaDataSource
+          xa-data-source-classname: org.postgresql.xa.PGXADataSource
+          serverName: localhost
+          portNumber: 5432
+          databaseName: habrdb
+          user: habrpguser
+          password: pgpwd4habr
+
+ibm:
+  mq:
+    user: admin
+    password: passw0rd
+    queue-manager: QM1
+    channel: DEV.ADMIN.SVRCONN
+    conn-name: localhost(1414)
+    use-authentication-m-q-c-s-p: false
+logging:
+  level:
+    com:
+      atomikos: debug

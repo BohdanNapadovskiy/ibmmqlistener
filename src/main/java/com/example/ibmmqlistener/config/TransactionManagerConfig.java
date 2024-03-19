@@ -7,7 +7,6 @@ import org.springframework.context.annotation.Configuration;
 
 import com.atomikos.jdbc.AtomikosDataSourceBean;
 import org.springframework.context.annotation.Bean;
-import javax.transaction.SystemException;
 import java.util.Properties;
 
 @Configuration
@@ -34,17 +33,4 @@ public class TransactionManagerConfig {
         return dataSource;
     }
 
-    @Bean(initMethod = "init", destroyMethod = "close")
-    public UserTransactionManager userTransactionManager() throws SystemException {
-        UserTransactionManager userTransactionManager = new UserTransactionManager();
-        userTransactionManager.setTransactionTimeout(300);
-        userTransactionManager.setForceShutdown(true);
-        return userTransactionManager;
-    }
-    @Bean(initMethod = "init", destroyMethod = "close")
-    public UserTransactionManager atomikosTransactionManager() {
-        UserTransactionManager manager = new UserTransactionManager();
-        manager.setForceShutdown(false);
-        return manager;
-    }
 }

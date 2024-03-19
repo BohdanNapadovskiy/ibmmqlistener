@@ -31,15 +31,13 @@ public class JMSListener {
     @JmsListener(destination = "ORDER.REQUEST", containerFactory = "JmsFactory")
     @Transactional
     public void process(Message message) {
-        System.out.println(message);
+        log.info("Processing message from queue {}", message);
         try {
-            if (!validator.validateMessage(message)) {
-//                jmsTemplate.convertAndSend("BACK.OUT.QUEUE",message );
-                throw new NotValidMessageException("Not valid message id " + message.getJMSMessageID());
-            }
+            validator.validateMessage(message);
             processMessage(message);
-        } catch (JMSException | JsonProcessingException e) {
-            throw new RuntimeException(e);
+        } catch (JMSException | JsonProcessingException | NotValidMessageException e) {
+            log.error("Error processing message {}", message);
+              jmsTemplate.convertAndSend("BACK.OUT.QUEUE",message );
         }
     }
 

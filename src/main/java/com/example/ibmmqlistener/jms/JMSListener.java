@@ -9,14 +9,12 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.jms.JMSException;
 import jakarta.jms.Message;
 import jakarta.jms.TextMessage;
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.jms.annotation.JmsListener;
 import org.springframework.jms.core.JmsTemplate;
 import org.springframework.stereotype.Component;
-
-
-import org.springframework.transaction.annotation.Transactional;
 
 
 @Slf4j
@@ -29,7 +27,7 @@ public class JMSListener {
 
 
     @JmsListener(destination = "ORDER.REQUEST", containerFactory = "JmsFactory")
-    @Transactional
+    @Transactional()
     public void process(Message message) {
         log.info("Processing message from queue {}", message);
         try {

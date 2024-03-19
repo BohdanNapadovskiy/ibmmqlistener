@@ -27,15 +27,14 @@ public class JMSListener {
 
 
     @JmsListener(destination = "ORDER.REQUEST", containerFactory = "JmsFactory")
-    @Transactional()
+    @Transactional
     public void process(Message message) {
         log.info("Processing message from queue {}", message);
         try {
             validator.validateMessage(message);
             processMessage(message);
         } catch (JMSException | JsonProcessingException | NotValidMessageException e) {
-            log.error("Error processing message {}", message);
-              jmsTemplate.convertAndSend("BACK.OUT.QUEUE",message );
+            throw new RuntimeException();
         }
     }
 
